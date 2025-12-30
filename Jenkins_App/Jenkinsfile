@@ -24,8 +24,9 @@ pipeline {
                     dotnet --version
 
                     echo "--- Building Application ---"
-                    dotnet build Jenkins_App.sln --configuration Release
-
+                    cd Jenkins_App
+                    dotnet restore
+                    dotnet build -c Release --no-restore
                     echo "--- Listing Workspace Files after build ---"
                     ls -la
                 '''
