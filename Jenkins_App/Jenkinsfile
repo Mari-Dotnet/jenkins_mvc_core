@@ -26,7 +26,7 @@ pipeline {
                     echo "--- Building Application ---"
                     cd Jenkins_App
                     dotnet restore
-                    dotnet build -c Release --no-restore
+                    dotnet build -c Release 
                     echo "--- Listing Workspace Files after build ---"
                     ls -la
                 '''
