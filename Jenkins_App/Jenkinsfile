@@ -2,9 +2,29 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('Build') {
+			agent{
+				docker{
+					image 'mcr.microsoft.com/dotnet/sdk:8.0-alpine' 
+					reuseNode true
+				}
+			}
             steps {
-                echo 'Hello World'
+                sh '''
+					echo "--- Listing Workspace Files ---"
+					ls -la
+
+					echo "--- Verifying .NET SDK Version ---"
+					dotnet --version
+
+					echo "--- Building Application ---"
+					dotnet build Jenkins_App.sln --configuration Release
+					
+					echo "--- Listing Workspace Files after build---"
+					ls -la
+					
+					'''
+
             }
         }
     }
