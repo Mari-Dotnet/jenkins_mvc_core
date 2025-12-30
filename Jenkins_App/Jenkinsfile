@@ -6,7 +6,7 @@ pipeline {
 			agent{
 				docker{
 					image 'mcr.microsoft.com/dotnet/sdk:8.0-alpine'
-					args '-v /var/run/docker.sock:/var/run/docker.sock -u root'
+					args '-v /var/run/docker.sock:/var/run/docker.sock -e DOCKER_HOST="" -e DOCKER_TLS_VERIFY="" -u root'
 					reuseNode true
 				}
 			}
