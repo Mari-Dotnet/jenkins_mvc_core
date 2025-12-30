@@ -3,28 +3,32 @@ pipeline {
 
     stages {
         stage('Build') {
-			agent{
-				docker{
-					image 'mcr.microsoft.com/dotnet/sdk:8.0-alpine' 
-					reuseNode true
-				}
-			}
+            agent {
+                docker {
+                    image 'mcr.microsoft.com/dotnet/sdk:8.0-alpine'
+                    reuseNode true
+                    args '''
+                      -e DOTNET_CLI_HOME=/tmp/dotnet
+                      -e DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
+                      -e DOTNET_NOLOGO=true
+                      -e NUGET_PACKAGES=/tmp/nuget
+                    '''
+                }
+            }
             steps {
                 sh '''
-					echo "--- Listing Workspace Files ---"
-					ls -la
+                    echo "--- Listing Workspace Files ---"
+                    ls -la
 
-					echo "--- Verifying .NET SDK Version ---"
-					dotnet --version
+                    echo "--- Verifying .NET SDK Version ---"
+                    dotnet --version
 
-					echo "--- Building Application ---"
-					dotnet build Jenkins_App.sln --configuration Release
-					
-					echo "--- Listing Workspace Files after build---"
-					ls -la
-					
-					'''
+                    echo "--- Building Application ---"
+                    dotnet build Jenkins_App.sln --configuration Release
 
+                    echo "--- Listing Workspace Files after build ---"
+                    ls -la
+                '''
             }
         }
     }
