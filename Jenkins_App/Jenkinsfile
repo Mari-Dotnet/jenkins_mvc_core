@@ -3,6 +3,11 @@ pipeline {
 
     stages {
         stage('Build') {
+			agent{
+				docker{
+					image 'node:18-alpine'
+					reuseNode true
+				}
             steps {
                 sh '''
 					echo "docker chcek" 
@@ -10,11 +15,12 @@ pipeline {
 					echo "--- Listing Workspace Files ---"
 					ls -la
 
-					echo "--- Verifying .NET SDK Version ---"
-					dotnet --version
+					echo "--- Verifying .node version ---"
+					npm --version
+					node --version
 
 					echo "--- Building Application ---"
-					dotnet build Jenkins_App.sln --configuration Release
+					npm ci
 					
 					echo "--- Listing Workspace Files after build---"
 					ls -la
