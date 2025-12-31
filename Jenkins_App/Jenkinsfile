@@ -33,13 +33,14 @@ pipeline {
                 '''
             }
         }
-		*/
+		
 
 		stage('Docker') {
             steps {
                 sh 'docker build -f Jenkins_App/dockerfile.txt -t my-jenkins-first .'
             }
         }
+		*/
 
 		stage('Export Image') {
 		    steps {
