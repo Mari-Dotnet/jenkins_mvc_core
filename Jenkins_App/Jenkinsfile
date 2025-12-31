@@ -2,11 +2,7 @@ pipeline {
     agent any
 
     stages {
-		stage('Docker') {
-            steps {
-                sh 'docker build -f dockerfile.txt -t my-jenkins-first .'
-            }
-        }
+		
         stage('Build') {
             agent {
                 docker {
@@ -35,6 +31,12 @@ pipeline {
                     echo "--- Listing Workspace Files after build ---"
                     ls -la
                 '''
+            }
+        }
+
+		stage('Docker') {
+            steps {
+                sh 'docker build -f dockerfile.txt -t my-jenkins-first .'
             }
         }
     }
