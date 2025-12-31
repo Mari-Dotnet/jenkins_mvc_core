@@ -4,7 +4,7 @@ WORKDIR /src
 COPY . .
 # This command requires the SDK; it will fail in the aspnet-alpine image
 RUN ls  /src
-RUN dotnet publish Jenkins_App.sln -c Release -o /app
+RUN dotnet publish "Jenkins_App/Jenkins_App.sln" -c Release -o /app
 
 # STAGE 2: The Final Image (Only Requires Runtime)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine
