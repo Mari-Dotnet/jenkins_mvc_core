@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-		
+		/*
         stage('Build') {
             agent {
                 docker {
@@ -33,11 +33,22 @@ pipeline {
                 '''
             }
         }
+		*/
 
 		stage('Docker') {
             steps {
                 sh 'docker build -f Jenkins_App/dockerfile.txt -t my-jenkins-first .'
             }
         }
+
+		stage('Export Image') {
+		    steps {
+		        // This saves the image into a physical file
+		        sh 'docker save -o my-jenkins-image.tar my-jenkins-first'
+		        
+		        // This makes the file available to download from the Jenkins UI
+		        archiveArtifacts artifacts: 'my-jenkins-image.tar', fingerprint: true
+		    }
+		}
     }
 }
